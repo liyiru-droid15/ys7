@@ -95,7 +95,8 @@ class Run{
 		}
 		//[设备序列号]:[通道号],[设备序列号]:[通道号]
 		$data['source'] = $parm['sn'].':'.$aisle;
-		return $this->queryApi($url,$parm);
+		unset($parm['sn']);
+		return $this->queryApi($parm,$url);
 	}
 	
 
