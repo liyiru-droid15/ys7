@@ -83,6 +83,22 @@ class Run{
 		return $this->queryApi($data,$url);
 	}
 
+	//获取直播地址
+	public function getPlayUrl($parm)
+	{
+		$url = 'https://open.ys7.com/api/lapp/live/address/get';	
+		if(!isset($parm['sn'])){
+			return false;
+		}
+		if(!isset($parm['aisle'])){
+			$aisle=1;
+		}
+		//[设备序列号]:[通道号],[设备序列号]:[通道号]
+		$data['source'] = $parm['sn'].':'.$aisle;
+		return $this->queryApi($url,$parm);
+	}
+	
+
 	private function queryApi(array $data,$url)
 	{
 		$data['accessToken'] = $this->getToken(self::$appKey,self::$appSecret);
