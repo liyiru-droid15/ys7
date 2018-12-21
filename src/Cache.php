@@ -12,7 +12,7 @@ class Cache{
 		if(!is_string($k) || !trim($k)){
 			return false;
 		}
-		$key = self::$cachePath.sha1(md5($k));
+		$key = self::$cachePath.sha1(md5($k.date('Ymd')));
 		if(is_object($value)){
 			$value = serialize($value);
 		}
@@ -25,7 +25,11 @@ class Cache{
 		if(!is_string($k) || !trim($k)){
 			return false;
 		}
-		$key = self::$cachePath.sha1(md5($k));
+		$oldCache = self::$cachePath.sha1(md5( $k.date('Ymd',strtotime('-1 day')) ));
+		if(file_exists($oldCache)){
+			unlink($oldCache);
+		}
+		$key = self::$cachePath.sha1(md5($k.date('Ymd')));
 		if(!file_exists($key)){
 			return false;
 		}
