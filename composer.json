@@ -1,0 +1,22 @@
+{
+    "name": "droid15/ys7",
+    "description": "This is the hikvision ys7 API(海康摄像头萤石云API)",
+    "type": "library",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "liyiru",
+            "email": "Droid15@126.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "droid15\\": "src/"
+        }
+    }
+}
