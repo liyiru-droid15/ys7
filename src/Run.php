@@ -9,8 +9,8 @@ class Run{
 
 	public function __construct($appKey=null,$appSecret=null)
 	{
-		if(!$appKey||!$appSecret){
-			return false;die;
+		if(!$appKey || !$appSecret || !is_string($appKey) || !is_string($appSecret)){
+			die('Need appKey and appSecret');
 		}
 		self::$appSecret = $appSecret;
 		self::$appKey = $appKey;
@@ -19,6 +19,7 @@ class Run{
 	//设备列表
 	public function deviceList($parm=[])
 	{
+		
 		$url = 'https://open.ys7.com/api/lapp/device/list';
 		$data = [];
 		if(isset($parm['pageStart'])){
@@ -102,17 +103,17 @@ class Run{
 
 	private function queryApi(array $data,$url)
 	{
-		$data['accessToken'] = $this->getToken(self::$appKey,self::$appSecret);
+		$data['accessToken'] = $this->getToken();
 		return $this->execPost($url,http_build_query($data));	
 	}
 
-	protected function getToken($appKey,$appSecret)
+	protected function getToken()
     {
 
    		$url = 'https://open.ys7.com/api/lapp/token/get';
    		$data = [
-   			'appKey'=>$appKey,
-   			'appSecret'=>$appSecret
+   			'appKey'=>self::$appKey,
+   			'appSecret'=>self::$appSecret
    		];    	
 
     	if(Cache::get('accessToken')){

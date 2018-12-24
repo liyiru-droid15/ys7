@@ -6,7 +6,7 @@ namespace droid15;
 define("CACHE_PATH", __DIR__.'/cache/');
 
 class Cache {	
-	//static $cachePath = __DIR__.'/cache/';
+	
 	/**
 	 * 存缓存
 	 * @param [string] $k     [缓存键名]
@@ -26,6 +26,10 @@ class Cache {
 
 		if(is_object($value)){
 			$value = serialize($value);
+		}
+
+		if(is_array($value)){
+			$value = json_encode($value,JSON_UNESCAPED_UNICODE);
 		}
 
 		$res = file_put_contents($key, $value,LOCK_EX);
@@ -55,7 +59,7 @@ class Cache {
 			$files = scandir(CACHE_PATH);
 			foreach ($files as $k => $v) {
 				if($v!='.' && $v!='..' && $v!=$name){
-				unlink(CACHE_PATH.$v);
+					@unlink(CACHE_PATH.$v);
 				}
 			}	
 		}
@@ -77,7 +81,7 @@ class Cache {
 		$files = scandir(CACHE_PATH);
 		foreach ($files as $k => $v) {
 			if($v!='.' && $v!='..'){
-				unlink(CACHE_PATH.$v);
+				@unlink(CACHE_PATH.$v);
 			}
 		}	
 		
